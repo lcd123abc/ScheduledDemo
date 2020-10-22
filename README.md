@@ -1,3 +1,5 @@
 # ScheduledDemo
-后台任务Demo
+spring boot 使用SchedulingConfigurer实现动态定时任务的Demo
+
+将定时任务类名和corn存在数据库,修改corn可以动态更改定时任务时间
 
