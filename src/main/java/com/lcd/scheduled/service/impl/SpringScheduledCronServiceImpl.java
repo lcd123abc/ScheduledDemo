@@ -18,11 +18,7 @@ import java.util.Optional;
 public class SpringScheduledCronServiceImpl implements SpringScheduledCronService {
     private SpringScheduledCronDao springScheduledCronDao;
 
-    /**
-     * 根据类名查找对应的后台任务
-     * @param taskJobClass
-     * @return
-     */
+
     @Override
     public SpringScheduledCron findByTaskJobClass(String taskJobClass) {
         if (StringUtils.isNotBlank(taskJobClass)){

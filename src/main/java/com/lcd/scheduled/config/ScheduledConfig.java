@@ -43,6 +43,10 @@ public class ScheduledConfig implements SchedulingConfigurer {
         }
     }
 
+    /**
+     * 自定义线程池
+     * @return threadPoolTaskExecutor
+     */
     @Bean
     public Executor taskExecutor() {
         // spring封装的 ThreadPoolExecutor
@@ -59,6 +63,7 @@ public class ScheduledConfig implements SchedulingConfigurer {
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return threadPoolTaskExecutor;
     }
+
     @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
