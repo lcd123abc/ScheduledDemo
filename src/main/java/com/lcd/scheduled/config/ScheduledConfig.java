@@ -1,9 +1,9 @@
 package com.lcd.scheduled.config;
 
 
-import com.lcd.scheduled.dao.SpringScheduledCronDao;
 import com.lcd.scheduled.entiry.SpringScheduledCron;
 import com.lcd.scheduled.job.ScheduledOfTask;
+import com.lcd.scheduled.service.SpringScheduledCronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -18,14 +18,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
 public class ScheduledConfig implements SchedulingConfigurer {
-    @Autowired
     private ApplicationContext context;
-    @Autowired
-    private SpringScheduledCronDao springScheduledCronDao;
+    private SpringScheduledCronService springScheduledCronService;
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
-        for (SpringScheduledCron springScheduledCron : springScheduledCronDao.findAll()) {
+        for (SpringScheduledCron springScheduledCron : springScheduledCronService.findAll()) {
             Class<?> clazz;
             Object task;
             try {
@@ -38,7 +36,7 @@ public class ScheduledConfig implements SchedulingConfigurer {
             // 可以通过改变数据库数据进而实现动态改变执行周期
             scheduledTaskRegistrar.addTriggerTask(((Runnable) task),
                     triggerContext -> {
-                        String cronExpression = springScheduledCronDao.findByTaskJobClass(springScheduledCron.getTaskJobClass()).getCronExpression();
+                        String cronExpression = springScheduledCronService.findByTaskJobClass(springScheduledCron.getTaskJobClass()).getCronExpression();
                         return new CronTrigger(cronExpression).nextExecutionTime(triggerContext);
                     }
             );
@@ -61,5 +59,12 @@ public class ScheduledConfig implements SchedulingConfigurer {
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         return threadPoolTaskExecutor;
     }
-
+    @Autowired
+    public void setContext(ApplicationContext context) {
+        this.context = context;
+    }
+    @Autowired
+    public void setSpringScheduledCronService(SpringScheduledCronService springScheduledCronService) {
+        this.springScheduledCronService = springScheduledCronService;
+    }
 }

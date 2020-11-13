@@ -1,12 +1,14 @@
 package com.lcd.scheduled.entiry;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "spring_scheduled_cron")
+@ToString
 public class SpringScheduledCron {
     @Id
     @Column(name = "id")
