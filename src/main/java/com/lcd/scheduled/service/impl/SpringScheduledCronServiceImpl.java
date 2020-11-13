@@ -43,6 +43,13 @@ public class SpringScheduledCronServiceImpl implements SpringScheduledCronServic
         }
     }
 
+    @Override
+    public void save(SpringScheduledCron springScheduledCron) {
+        if (Objects.nonNull(springScheduledCron)){
+            springScheduledCronDao.save(springScheduledCron);
+        }
+    }
+
     @Autowired
     public void setSpringScheduledCronDao(SpringScheduledCronDao springScheduledCronDao) {
         this.springScheduledCronDao = springScheduledCronDao;

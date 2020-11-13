@@ -10,4 +10,6 @@ public interface SpringScheduledCronService {
     List<SpringScheduledCron> findAll();
 
     void update(SpringScheduledCron springScheduledCron);
+
+    void save(SpringScheduledCron springScheduledCron);
 }
