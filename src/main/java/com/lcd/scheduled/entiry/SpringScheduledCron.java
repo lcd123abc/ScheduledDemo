@@ -22,4 +22,6 @@ public class SpringScheduledCron {
     private String taskExplain;
     @Column(name = "status")
     private Integer status;
+    @Column(name = "class_id")
+    private String classId;
 }
